@@ -26,7 +26,8 @@
     frameCount = 0,
     jumpCount = 0,
     lastTime = 0,
-    flightEnabled = false;
+    flightEnabled = false,
+    menuVisible = true;
 
   const themes = [
     {
@@ -122,7 +123,7 @@
 
   const shortcutInfo = document.createElement('span');
   shortcutInfo.textContent = '(ALT+T to toggle)';
-  shortcutInfo.style.fontSize = '1rem';
+  shortcutInfo.style.fontSize = '0.75rem';
   shortcutInfo.style.marginLeft = '10px';
   shortcutInfo.style.color = '#aaa';
   title.appendChild(shortcutInfo);
@@ -134,7 +135,7 @@
     padding: '5px',
     cursor: 'pointer',
     fontSize: '1.2rem',
-    borderRadius: '4px',
+    borderRadius: '10px',
     border: 'none',
     backgroundColor: '#444',
     color: '#fff',
