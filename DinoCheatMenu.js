@@ -6,7 +6,6 @@
 
   log('Initializing cheat menu...');
 
-  // Remove existing menu
   const existing = document.getElementById('dino-cheat-menu');
   if (existing) {
     existing.remove();
@@ -89,7 +88,6 @@
   ];
   let themeIndex = 0;
 
-  // Menu container
   const menu = document.createElement('div');
   menu.id = 'dino-cheat-menu';
   Object.assign(menu.style, {
@@ -109,7 +107,6 @@
     userSelect: 'none',
   });
 
-  // Title bar
   const titleBar = document.createElement('div');
   Object.assign(titleBar.style, {
     display: 'flex',
@@ -123,7 +120,6 @@
   title.style.margin = '0';
   title.style.userSelect = 'text';
 
-  // Clear Console button
   const clearBtn = document.createElement('button');
   clearBtn.textContent = '🧹';
   Object.assign(clearBtn.style, {
@@ -149,7 +145,6 @@
     log('Console cleared', 'color:orange;');
   });
 
-  // Close button
   const closeBtn = document.createElement('button');
   closeBtn.textContent = '×';
   Object.assign(closeBtn.style, {
@@ -204,7 +199,6 @@
   titleBar.append(title, clearBtn, closeBtn);
   menu.append(titleBar);
 
-  // Collapsible category creation (start expanded)
   function createCategory(name) {
     const container = document.createElement('div');
     container.style.marginBottom = '12px';
@@ -216,7 +210,7 @@
     header.style.margin = '0 0 6px 0';
 
     const content = document.createElement('div');
-    content.style.display = 'block'; // expanded by default
+    content.style.display = 'block';
 
     header.addEventListener('click', () => {
       const isHidden = content.style.display === 'none';
@@ -228,7 +222,6 @@
     return content;
   }
 
-  // FIXED: Simplified checkbox with minimal styling
   function createCheckbox(label, callback) {
     const wrapper = document.createElement('label');
     wrapper.style.display = 'flex';
@@ -240,12 +233,10 @@
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
 
-    // Minimal styling to ensure checkbox renders properly
     Object.assign(checkbox.style, {
       marginRight: '10px',
       cursor: 'pointer',
-      // Remove problematic styles that might interfere with rendering
-      transform: 'scale(1.2)', // Make it slightly larger for better visibility
+      transform: 'scale(1.2)',
     });
 
     checkbox.addEventListener('change', e => callback(e.target.checked));
@@ -258,7 +249,6 @@
     return wrapper;
   }
 
-  // Slider with label and spacing
   function createSlider(label, min, max, step, callback, initial = 10) {
     const wrapper = document.createElement('div');
     wrapper.style.marginBottom = '10px';
@@ -284,7 +274,6 @@
     return wrapper;
   }
 
-  // Dino category with cheats
   const dinoCat = createCategory('Dino');
 
   dinoCat.append(
@@ -308,7 +297,6 @@
     if (!flightEnabled) return;
     const r = Runner.instance_;
     if (!r || !r.tRex) return;
-    // Throttle updates to every 30ms max
     if (!flightHandler.last || Date.now() - flightHandler.last > 30) {
       if (e.code === 'ArrowUp') {
         r.tRex.yPos = Math.max(r.tRex.yPos - flightSpeed, 0);
@@ -346,14 +334,12 @@
         log('Dance enabled', 'color:magenta;');
       } else {
         clearInterval(danceInterval);
-        // Reset yPos to ground
         r.tRex.yPos = r.tRex.groundYPos || 93;
         log('Dance disabled', 'color:orange;');
       }
     })
   );
 
-  // Visuals category
   const visualsCat = createCategory('Visuals');
 
   visualsCat.append(
@@ -370,7 +356,6 @@
     })
   );
 
-  // Theme rotate button with hover style
   const themeBtn = document.createElement('button');
   themeBtn.textContent = 'Rotate Theme';
   Object.assign(themeBtn.style, {
@@ -408,13 +393,11 @@
 
   visualsCat.append(themeBtn);
 
-  // Append menu
   document.body.append(menu);
   log('Menu loaded', 'color:lime;');
 
-  // FPS Counter
   function startFPS() {
-    if (fpsCounterEl) return; // Prevent multiple
+    if (fpsCounterEl) return;
     fpsCounterEl = document.createElement('div');
     Object.assign(fpsCounterEl.style, {
       position: 'fixed',
@@ -454,9 +437,8 @@
     fpsCounterEl = null;
   }
 
-  // Jump Counter
   function startJumpCounter() {
-    if (jumpCounterEl) return; // prevent multiple
+    if (jumpCounterEl) return;
     jumpCounterEl = document.createElement('div');
     Object.assign(jumpCounterEl.style, {
       position: 'fixed',
