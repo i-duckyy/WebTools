@@ -115,10 +115,17 @@
   });
 
   const title = document.createElement('h2');
-  title.textContent = 'Dino Cheat Menu';
+  title.textContent = 'Dino Cheat Menu ';
   title.style.flex = '1';
   title.style.margin = '0';
   title.style.userSelect = 'text';
+
+  const shortcutInfo = document.createElement('span');
+  shortcutInfo.textContent = '(ALT+T to toggle)';
+  shortcutInfo.style.fontSize = '1rem';
+  shortcutInfo.style.marginLeft = '10px';
+  shortcutInfo.style.color = '#aaa';
+  title.appendChild(shortcutInfo);
 
   const clearBtn = document.createElement('button');
   clearBtn.textContent = '🧹';
@@ -166,34 +173,29 @@
   );
 
   closeBtn.addEventListener('click', () => {
-    log('Closing & resetting...', 'color:red;');
+    hideMenu();
+  });
 
-    Runner.prototype.gameOver = original.gameOver;
+  function hideMenu() {
+    menu.style.display = 'none';
+    menuVisible = false;
+    log('Menu hidden (ALT+T to show)', 'color:yellow;');
+  }
+  function showMenu() {
+    menu.style.display = '';
+    menuVisible = true;
+    log('Menu shown', 'color:lime;');
+  }
 
-    const r = Runner.instance_;
-    if (r) {
-      r.setSpeed(original.speed);
-      r.distanceRan = original.dist;
-      if (r.tRex) {
-        r.tRex.setJumpVelocity(10);
-        r.tRex.groundYPos = 93;
-        r.tRex.yPos = r.tRex.groundYPos;
+  document.addEventListener('keydown', function(e) {
+    if (e.altKey && (e.key === 't' || e.key === 'T')) {
+      if (menuVisible) {
+        hideMenu();
+      } else {
+        showMenu();
       }
+      e.preventDefault();
     }
-    document.body.style.backgroundColor = original.bodyBg;
-    document.body.style.color = original.bodyColor;
-
-    cancelAnimationFrame(fpsCounterEl);
-    stopFPS();
-    stopJumpCounter();
-
-    document.removeEventListener('keydown', flightHandler);
-    document.removeEventListener('keydown', jumpListener);
-
-    clearInterval(danceInterval);
-
-    menu.remove();
-    log('Reset done', 'color:yellow;');
   });
 
   titleBar.append(title, clearBtn, closeBtn);
