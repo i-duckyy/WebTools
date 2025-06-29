@@ -2,6 +2,7 @@ console.log('%c[Slither Mod] Loaded', 'color: cyan; font-weight: bold;');
 
 // ==================== CSS Styling ====================
 const style = document.createElement('style');
+style.id = 'modStyle';
 style.innerHTML = `
 #modMenu {
     position: fixed;
@@ -15,19 +16,28 @@ style.innerHTML = `
     z-index: 9999;
     font-family: Arial, sans-serif;
     display: none;
-    width: 200px;
+    width: 220px;
 }
 #modMenu h3 {
     margin: 0 0 10px 0;
     font-size: 18px;
     text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#modMenu button {
+    background: crimson;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 12px;
 }
 #modMenu label {
     display: block;
     margin-bottom: 5px;
-}
-#modMenu input[type="range"] {
-    width: 100%;
 }
 #modNotifications {
     position: fixed;
@@ -61,12 +71,8 @@ document.head.appendChild(style);
 const modMenu = document.createElement('div');
 modMenu.id = 'modMenu';
 modMenu.innerHTML = `
-    <h3>Slither Mod Menu</h3>
-    <label><input type="checkbox" id="zoomToggle"> Enable Zoom</label>
-    <div id="zoomControls" style="display:none;">
-        <label>Zoom Level: <span id="zoomValue">1</span></label>
-        <input type="range" id="zoomSlider" min="0.1" max="2" step="0.1" value="1">
-    </div>
+    <h3>Slither Mod <button id="ejectMod">Eject</button></h3>
+    <label><input type="checkbox" id="zoomToggle"> Enable Zoom (scroll)</label>
 `;
 document.body.appendChild(modMenu);
 
@@ -81,37 +87,65 @@ function showNotification(message) {
     note.className = 'modNotification';
     note.textContent = message;
     notifications.appendChild(note);
+
+    if (notifications.children.length > 5) {
+        notifications.removeChild(notifications.children[0]);
+    }
+
     setTimeout(() => { note.remove(); }, 3000);
 }
 
 // ==================== Controls ====================
 let modMenuVisible = false;
 let zoomEnabled = false;
+let currentZoom = 1;
 
-document.addEventListener('keydown', (e) => {
+function handleKeyToggle(e) {
     if (e.key === '`') {
         modMenuVisible = !modMenuVisible;
         modMenu.style.display = modMenuVisible ? 'block' : 'none';
         showNotification(modMenuVisible ? 'Mod menu opened' : 'Mod menu closed');
     }
-});
+}
+
+document.addEventListener('keydown', handleKeyToggle);
 
 const zoomToggle = document.getElementById('zoomToggle');
-const zoomControls = document.getElementById('zoomControls');
-const zoomSlider = document.getElementById('zoomSlider');
-const zoomValue = document.getElementById('zoomValue');
 
 zoomToggle.addEventListener('change', () => {
     zoomEnabled = zoomToggle.checked;
-    zoomControls.style.display = zoomEnabled ? 'block' : 'none';
-    showNotification(zoomEnabled ? 'Zoom enabled' : 'Zoom disabled');
+    showNotification(zoomEnabled ? 'Zoom enabled (use scroll)' : 'Zoom disabled');
 
     if (!zoomEnabled) window.gsc = 1;
 });
 
-zoomSlider.addEventListener('input', () => {
-    const zoom = parseFloat(zoomSlider.value);
-    zoomValue.textContent = zoom;
-    if (zoomEnabled) window.gsc = zoom;
-    showNotification('Zoom set to ' + zoom);
+function handleZoomScroll(e) {
+    if (!zoomEnabled) return;
+
+    if (e.deltaY < 0) {
+        currentZoom = Math.min(currentZoom + 0.1, 2);
+    } else {
+        currentZoom = Math.max(currentZoom - 0.1, 0.1);
+    }
+    currentZoom = Math.round(currentZoom * 10) / 10;
+    window.gsc = currentZoom;
+    showNotification('Zoom set to ' + currentZoom);
+}
+
+document.addEventListener('wheel', handleZoomScroll);
+
+// ==================== Eject Mod ====================
+function ejectMod() {
+    document.removeEventListener('keydown', handleKeyToggle);
+    document.removeEventListener('wheel', handleZoomScroll);
+    modMenu.remove();
+    notifications.remove();
+    style.remove();
+    console.clear();
+    showNotification = function() {};
+}
+
+document.getElementById('ejectMod').addEventListener('click', () => {
+    showNotification('Ejecting mod...');
+    setTimeout(() => ejectMod(), 500);
 });
