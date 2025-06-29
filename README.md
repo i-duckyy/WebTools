@@ -77,3 +77,30 @@ Paste the following loader script into the Chrome DevTools Console on  `https://
     });
 })();
 ```
+
+---
+
+## Slither Mod
+
+Create a mod menu in `slither.io` when the user presses `graveAccent`
+
+### How to use
+
+Paste the following loader script into the Chrome DevTools Console on  `http://slither.io` to load:
+
+```js
+(function() {
+    const url = 'https://raw.githubusercontent.com/i-duckyy/WebTools/main/SlitherMod.js';
+    fetch(url)
+        .then(res => res.text())
+        .then(code => {
+            try {
+                eval(code);
+                console.log('%c[Mod Loader] Script injected successfully!', 'color: lime; font-weight: bold;');
+            } catch (err) {
+                console.error('[Mod Loader] Script execution failed:', err);
+            }
+        })
+        .catch(err => console.error('[Mod Loader] Failed to fetch script:', err));
+})();
+```
