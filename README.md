@@ -30,7 +30,7 @@ Paste the following loader script into the Chrome DevTools Console on `chrome://
 
 ```js
 (() => {
-  const url = 'https://raw.githubusercontent.com/i-duckyy/WebTools/refs/heads/main/DinoCheatMenu.js';
+  const url = 'https://raw.githubusercontent.com/im-ducky/WebTools/refs/heads/main/DinoCheatMenu.js';
   console.log('[Loader] Loading DinoCheatMenu...');
   fetch(url)
     .then((res) => {
@@ -60,7 +60,7 @@ Paste the following loader script into the Chrome DevTools Console on  `https://
 
 ```js
 (() => {
-  const url = 'https://raw.githubusercontent.com/i-duckyy/WebTools/refs/heads/main/ChatGPT.tweaks.js';
+  const url = 'https://raw.githubusercontent.com/im-ducky/WebTools/refs/heads/main/ChatGPT.tweaks.js';
   console.log('[Loader] Loading ChatGPT Tweaks...');
   fetch(url)
     .then((res) => {
@@ -90,7 +90,7 @@ Paste the following loader script into the Chrome DevTools Console on  `http://s
 
 ```js
 (function() {
-    const url = 'https://raw.githubusercontent.com/i-duckyy/WebTools/main/SlitherMod.js';
+    const url = 'https://raw.githubusercontent.com/im-ducky/WebTools/main/SlitherMod.js';
     fetch(url)
         .then(res => res.text())
         .then(code => eval(code))
