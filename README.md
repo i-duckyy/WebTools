@@ -64,36 +64,6 @@ Paste the following loader script into the Chrome DevTools Console on `chrome://
 
 ---
 
-## Chat GPT Tweaks
-
-Adds themeing to `https://chatgpt.com`
-
-### How to use
-
-Paste the following loader script into the Chrome DevTools Console on  `https://chatgpt.com` to load:
-
-```js
-(() => {
-  const url = 'https://raw.githubusercontent.com/im-ducky/WebTools/refs/heads/main/ChatGPT.tweaks.js';
-  console.log('[Loader] Loading ChatGPT Tweaks...');
-  fetch(url)
-    .then((res) => {
-      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-      return res.text();
-    })
-    .then((code) => {
-      const fn = new Function(code);
-      fn();
-      console.log('[Loader] ChatGPT Tweaks loaded successfully.');
-    })
-    .catch((err) => {
-      console.error('[Loader] Failed to load ChatGPT Tweaks:', err);
-    });
-})();
-```
-
----
-
 ## Slither Mod
 
 Create a mod menu in `slither.io` when the user presses `graveAccent`
