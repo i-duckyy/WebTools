@@ -20,6 +20,19 @@ If you do not trust these loader scripts, look through the directed file's code 
 
 ---
 
+## Plans - VERY VAGUE
+
+Make menu for edge://surf (microsoft edger only)
+Make a mod for SparxMaths (pointless)
+
+Make a web extension for it
+ - All toggled by switches in a menu
+ - Extension has local website
+
+Update DinoCheatMenu
+
+---
+
 ## DinoCheatMenu
 
 A cheat menu for the Chrome offline dinosaur game (`chrome://dino/`)
