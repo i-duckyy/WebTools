@@ -478,4 +478,32 @@
     jumpCounterEl = null;
     document.removeEventListener('keydown', jumpListener);
   }
+
+  window.dcm = {
+    eject: () => {
+      menu.remove();
+      stopFPS();
+      stopJumpCounter();
+      document.body.style.backgroundColor = original.bodyBg;
+      document.body.style.color = original.bodyColor;
+      Runner.prototype.gameOver = original.gameOver;
+      log('DinoCheatMenu ejected', 'color:red;');
+      delete window.dcm;
+    },
+    theme_rotate: () => {
+      themeBtn.click();
+    },
+    show: showMenu,
+    hide: hideMenu,
+    godmode: (on = true) => {
+      Runner.prototype.gameOver = on ? () => {} : original.gameOver;
+      log(`God Mode ${on ? 'enabled' : 'disabled'}`, 'color:lime;');
+    },
+    flight: (on = true) => {
+      flightEnabled = on;
+      if (on) document.addEventListener('keydown', flightHandler);
+      else document.removeEventListener('keydown', flightHandler);
+      log(`Flight ${on ? 'enabled' : 'disabled'}`, 'color:deepskyblue;');
+    }
+  };
 })();
