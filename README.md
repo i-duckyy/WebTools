@@ -23,6 +23,7 @@ If you do not trust these loader scripts, look through the directed file's code 
 ## Plans - VERY VAGUE
 
 Make menu for edge://surf (microsoft edger only)
+
 Make a mod for SparxMaths (pointless)
 
 Make a web extension for it
