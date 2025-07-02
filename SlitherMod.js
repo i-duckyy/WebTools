@@ -519,7 +519,7 @@
     }
 
     function handleKeyToggle(e){
-        if(e.key==='`'){
+        if(e.key==='c'){
             modMenuVisible=!modMenuVisible;
             modMenu.style.display=modMenuVisible?'block':'none';
             showNotification(modMenuVisible?'Mod menu opened':'Mod menu closed');
